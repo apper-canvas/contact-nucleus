@@ -80,7 +80,7 @@ const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
     
     try {
       let savedContact;
-      if (isEdit && contact) {
+if (isEdit && contact) {
         savedContact = await contactService.update(contact.Id, formData);
         toast.success("Contact updated successfully!");
       } else {
