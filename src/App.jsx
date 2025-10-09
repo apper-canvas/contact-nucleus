@@ -10,7 +10,9 @@ import ErrorPage from "@/components/pages/ErrorPage";
 import ResetPassword from "@/components/pages/ResetPassword";
 import PromptPassword from "@/components/pages/PromptPassword";
 import ContactsPage from "@/components/pages/ContactsPage";
-
+import CompaniesPage from "@/components/pages/CompaniesPage";
+import DealsPage from "@/components/pages/DealsPage";
+import QuotesPage from "@/components/pages/QuotesPage";
 export const AuthContext = createContext(null);
 
 function App() {
@@ -116,7 +118,7 @@ function App() {
   return (
     <AuthContext.Provider value={authMethods}>
       <div className="min-h-screen bg-green-50">
-        <Routes>
+<Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/callback" element={<Callback />} />
@@ -125,6 +127,9 @@ function App() {
           <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
           <Route path="/" element={<ContactsPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/companies" element={<CompaniesPage />} />
+          <Route path="/deals" element={<DealsPage />} />
+          <Route path="/quotes" element={<QuotesPage />} />
         </Routes>
         <ToastContainer
           position="top-right"

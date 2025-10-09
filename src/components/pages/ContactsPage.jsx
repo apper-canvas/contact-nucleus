@@ -81,11 +81,23 @@ return (
             </div>
             
             {/* Navigation Menu */}
-            <nav className="flex-1 p-4 space-y-2">
+<nav className="flex-1 p-4 space-y-2">
               <div className="space-y-1">
-<button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
                   <ApperIcon name="Users" className="w-4 h-4" />
                   All Contacts
+                </button>
+                <button onClick={() => window.location.href = '/companies'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                  <ApperIcon name="Building" className="w-4 h-4" />
+                  Companies
+                </button>
+                <button onClick={() => window.location.href = '/deals'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                  <ApperIcon name="TrendingUp" className="w-4 h-4" />
+                  Deals
+                </button>
+                <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                  <ApperIcon name="Receipt" className="w-4 h-4" />
+                  Quotes
                 </button>
                 <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
                   <ApperIcon name="Star" className="w-4 h-4" />
