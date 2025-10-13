@@ -74,9 +74,9 @@ return (
                 </div>
                 <div>
                   <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                    Contact Hub
+HubCRM
                   </h1>
-                  <p className="text-sm text-slate-600">Manage your contacts</p>
+                  <p className="text-sm text-slate-600">Customer Relationship Management</p>
                 </div>
               </div>
             </div>

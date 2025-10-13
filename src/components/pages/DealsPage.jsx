@@ -61,12 +61,13 @@ function DealsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+<div className="flex min-h-screen bg-green-50">
       {/* Sidebar */}
       <div className="hidden lg:flex lg:flex-col lg:w-64 bg-white border-r border-slate-200">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-200">
-          <h1 className="text-xl font-bold text-slate-900">Deals</h1>
+{/* Header */}
+        <div className="p-4 border-b border-slate-200">
+          <h1 className="text-2xl font-bold text-slate-900 mb-1">HubCRM</h1>
+          <h2 className="text-lg font-semibold text-slate-700">Deals</h2>
         </div>
 
         {/* Navigation */}
