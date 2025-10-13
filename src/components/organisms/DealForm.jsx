@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { dealService } from '@/services/api/dealService';
-import { companyService } from '@/services/api/companyService';
-import Input from '@/components/atoms/Input';
-import Button from '@/components/atoms/Button';
-import Label from '@/components/atoms/Label';
-import FormField from '@/components/molecules/FormField';
-import Loading from '@/components/ui/Loading';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { dealService } from "@/services/api/dealService";
+import { companyService } from "@/services/api/companyService";
+import { taskService } from "@/services/api/taskService";
+import Loading from "@/components/ui/Loading";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Label from "@/components/atoms/Label";
+import FormField from "@/components/molecules/FormField";
 
 const stageOptions = [
   'Prospecting',
@@ -26,16 +27,20 @@ function DealForm({ deal, onSave, onCancel }) {
     amount: '',
     closeDate: '',
     stage: 'Prospecting',
-    company: '',
+company: '',
+    task: '',
     tags: ''
   });
-  const [companies, setCompanies] = useState([]);
+const [companies, setCompanies] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingCompanies, setLoadingCompanies] = useState(true);
+  const [loadingTasks, setLoadingTasks] = useState(true);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
+useEffect(() => {
     loadCompanies();
+    loadTasks();
   }, []);
 
   useEffect(() => {
@@ -47,7 +52,8 @@ function DealForm({ deal, onSave, onCancel }) {
         closeDate: deal.closeDate || '',
         stage: deal.stage || 'Prospecting',
         company: deal.company?.Id?.toString() || '',
-        tags: Array.isArray(deal.tags) ? deal.tags.join(', ') : deal.tags || ''
+tags: Array.isArray(deal.tags) ? deal.tags.join(', ') : deal.tags || '',
+        task: deal.task?.Id || deal.task || ''
       });
     }
   }, [deal]);
@@ -62,8 +68,19 @@ function DealForm({ deal, onSave, onCancel }) {
     } finally {
       setLoadingCompanies(false);
     }
-  };
+};
 
+  const loadTasks = async () => {
+    setLoadingTasks(true);
+    try {
+      const data = await taskService.getAll();
+      setTasks(data);
+    } catch (error) {
+      toast.error('Failed to load tasks');
+    } finally {
+      setLoadingTasks(false);
+    }
+  };
   const validateForm = () => {
     const newErrors = {};
 
@@ -92,7 +109,8 @@ function DealForm({ deal, onSave, onCancel }) {
       const dealData = {
         ...formData,
         amount: parseFloat(formData.amount) || 0,
-        company: formData.company ? parseInt(formData.company) : null,
+company: formData.company ? parseInt(formData.company) : null,
+        task: formData.task ? parseInt(formData.task) : null,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
       };
 
@@ -187,7 +205,7 @@ function DealForm({ deal, onSave, onCancel }) {
           </select>
         </FormField>
 
-        <FormField label="Company" error={errors.company}>
+<FormField label="Company" error={errors.company}>
           <select
             value={formData.company}
             onChange={(e) => handleChange('company', e.target.value)}
@@ -198,6 +216,22 @@ function DealForm({ deal, onSave, onCancel }) {
             {companies.map(company => (
               <option key={company.Id} value={company.Id}>
                 {company.name}
+              </option>
+            ))}
+          </select>
+        </FormField>
+
+        <FormField label="Task" error={errors.task}>
+          <select
+            value={formData.task}
+            onChange={(e) => handleChange('task', e.target.value)}
+            disabled={loading || loadingTasks}
+            className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-slate-50 disabled:text-slate-500"
+          >
+            <option value="">Select a task</option>
+            {tasks.map(task => (
+              <option key={task.Id} value={task.Id}>
+                {task.name}
               </option>
             ))}
           </select>

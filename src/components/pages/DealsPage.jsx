@@ -81,6 +81,10 @@ function DealsPage() {
             <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
               <ApperIcon name="TrendingUp" className="w-4 h-4" />
               Deals
+</button>
+            <button onClick={() => window.location.href = '/tasks'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-purple-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="CheckSquare" className="w-4 h-4" />
+              Tasks
             </button>
             <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="Receipt" className="w-4 h-4" />

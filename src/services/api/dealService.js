@@ -16,8 +16,8 @@ const toDbFields = (uiData) => {
   if (uiData.amount !== undefined) dbData.amount_c = parseFloat(uiData.amount);
   if (uiData.closeDate !== undefined) dbData.close_date_c = uiData.closeDate;
   if (uiData.stage !== undefined) dbData.stage_c = uiData.stage;
-  if (uiData.company !== undefined) dbData.company_c = parseInt(uiData.company?.Id || uiData.company);
-  
+if (uiData.company !== undefined) dbData.company_c = parseInt(uiData.company?.Id || uiData.company);
+  if (uiData.task !== undefined) dbData.task_c = parseInt(uiData.task?.Id || uiData.task);
   // Convert tags array to comma-separated string
   if (uiData.tags !== undefined) {
     dbData.Tags = Array.isArray(uiData.tags) ? uiData.tags.join(',') : uiData.tags;
@@ -34,7 +34,8 @@ const toUiFields = (dbData) => {
     amount: dbData.amount_c || 0,
     closeDate: dbData.close_date_c || '',
     stage: dbData.stage_c || '',
-    company: dbData.company_c || null,
+company: dbData.company_c || null,
+    task: dbData.task_c || null,
     createdAt: dbData.CreatedOn || '',
     updatedAt: dbData.ModifiedOn || '',
     // Convert comma-separated string to array
@@ -47,7 +48,8 @@ const toUiFields = (dbData) => {
   uiData.amount_c = dbData.amount_c || 0;
   uiData.close_date_c = dbData.close_date_c || '';
   uiData.stage_c = dbData.stage_c || '';
-  uiData.company_c = dbData.company_c || null;
+uiData.company_c = dbData.company_c || null;
+  uiData.task_c = dbData.task_c || null;
   uiData.Tags = dbData.Tags ? (typeof dbData.Tags === 'string' ? dbData.Tags.split(',').map(t => t.trim()) : dbData.Tags) : [];
   uiData.CreatedOn = dbData.CreatedOn || '';
   uiData.ModifiedOn = dbData.ModifiedOn || '';
@@ -70,7 +72,8 @@ export const dealService = {
           { field: { Name: 'amount_c' } },
           { field: { Name: 'close_date_c' } },
           { field: { Name: 'stage_c' } },
-          { field: { Name: 'company_c' } }
+{ field: { Name: 'company_c' } },
+          { field: { Name: 'task_c' } }
         ],
         orderBy: [{ fieldName: 'Id', sorttype: 'DESC' }],
         pagingInfo: { limit: 100, offset: 0 }
@@ -103,7 +106,8 @@ export const dealService = {
           { field: { Name: 'amount_c' } },
           { field: { Name: 'close_date_c' } },
           { field: { Name: 'stage_c' } },
-          { field: { Name: 'company_c' } }
+{ field: { Name: 'company_c' } },
+          { field: { Name: 'task_c' } }
         ]
       };
       
