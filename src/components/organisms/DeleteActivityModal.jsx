@@ -1,0 +1,86 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { activityService } from '@/services/api/activityService';
+import Button from '@/components/atoms/Button';
+import ApperIcon from '@/components/ApperIcon';
+
+function DeleteActivityModal({ activity, onConfirm, onCancel }) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleDelete() {
+    try {
+      setLoading(true);
+      const success = await activityService.delete(activity.id);
+      if (success) {
+        onConfirm(activity);
+      }
+    } catch (error) {
+      console.error('Error deleting activity:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === e.currentTarget && !loading) {
+      onCancel();
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      onClick={handleBackdropClick}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+        className="bg-white rounded-lg shadow-xl w-full max-w-md"
+      >
+        <div className="p-6">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <ApperIcon name="AlertTriangle" className="w-6 h-6 text-red-600" />
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold text-slate-900">Delete Activity</h2>
+              <p className="text-slate-600 mt-1">This action cannot be undone</p>
+            </div>
+          </div>
+
+          <p className="text-slate-700 mb-6">
+            Are you sure you want to delete the activity "{activity.subject}"?
+          </p>
+
+          <div className="flex justify-end gap-3">
+            <Button
+              variant="outline"
+              onClick={onCancel}
+              disabled={loading}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={loading}
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Deleting...
+                </div>
+              ) : (
+                'Delete Activity'
+              )}
+            </Button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+export default DeleteActivityModal;

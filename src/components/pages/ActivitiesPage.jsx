@@ -1,56 +1,56 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import TaskList from '@/components/organisms/TaskList';
-import TaskDetail from '@/components/organisms/TaskDetail';
-import TaskModal from '@/components/organisms/TaskModal';
-import DeleteTaskModal from '@/components/organisms/DeleteTaskModal';
+import ActivityList from '@/components/organisms/ActivityList';
+import ActivityDetail from '@/components/organisms/ActivityDetail';
+import ActivityModal from '@/components/organisms/ActivityModal';
+import DeleteActivityModal from '@/components/organisms/DeleteActivityModal';
 import Button from '@/components/atoms/Button';
 import ApperIcon from '@/components/ApperIcon';
 
-function TasksPage() {
-  const [selectedTask, setSelectedTask] = useState(null);
+function ActivitiesPage() {
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [taskToEdit, setTaskToEdit] = useState(null);
-  const [taskToDelete, setTaskToDelete] = useState(null);
+  const [activityToEdit, setActivityToEdit] = useState(null);
+  const [activityToDelete, setActivityToDelete] = useState(null);
   const [showMobileDetail, setShowMobileDetail] = useState(false);
 
-  function handleSelectTask(task) {
-    setSelectedTask(task);
+  function handleSelectActivity(activity) {
+    setSelectedActivity(activity);
     setShowMobileDetail(true);
   }
 
-  function handleEditTask(task) {
-    setTaskToEdit(task);
+  function handleEditActivity(activity) {
+    setActivityToEdit(activity);
     setIsModalOpen(true);
   }
 
-  function handleDeleteTask(task) {
-    setTaskToDelete(task);
+  function handleDeleteActivity(activity) {
+    setActivityToDelete(activity);
     setIsDeleteModalOpen(true);
   }
 
-  function handleSaveTask() {
+  function handleSaveActivity() {
     setIsModalOpen(false);
-    setTaskToEdit(null);
+    setActivityToEdit(null);
   }
 
-  function handleTaskDeleted(deletedTask) {
-    if (selectedTask?.id === deletedTask.id) {
-      setSelectedTask(null);
+  function handleActivityDeleted(deletedActivity) {
+    if (selectedActivity?.id === deletedActivity.id) {
+      setSelectedActivity(null);
     }
     setIsDeleteModalOpen(false);
-    setTaskToDelete(null);
+    setActivityToDelete(null);
   }
 
   function handleCloseModal() {
     setIsModalOpen(false);
-    setTaskToEdit(null);
+    setActivityToEdit(null);
   }
 
   function handleCloseDeleteModal() {
     setIsDeleteModalOpen(false);
-    setTaskToDelete(null);
+    setActivityToDelete(null);
   }
 
   function handleCloseMobileDetail() {
@@ -58,10 +58,10 @@ function TasksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50">
       {/* Mobile Header */}
       <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-3">
-        <h1 className="text-xl font-semibold text-slate-800">Tasks</h1>
+        <h1 className="text-xl font-semibold text-slate-800">Activities</h1>
       </div>
 
       <div className="flex h-screen lg:h-auto lg:min-h-screen">
@@ -69,10 +69,10 @@ function TasksPage() {
         <div className="hidden lg:flex w-64 bg-white border-r border-slate-200 flex-col">
           <div className="p-6 border-b border-slate-200">
             <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <ApperIcon name="CheckSquare" className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                <ApperIcon name="Activity" className="w-5 h-5 text-white" />
               </div>
-              Tasks
+              Activities
             </h1>
           </div>
           
@@ -89,12 +89,12 @@ function TasksPage() {
               <ApperIcon name="Handshake" className="w-4 h-4" />
               Deals
             </button>
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+            <button onClick={() => window.location.href = '/tasks'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="CheckSquare" className="w-4 h-4" />
               Tasks
             </button>
-            <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-<ApperIcon name="Activity" className="w-4 h-4" />
+            <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+              <ApperIcon name="Activity" className="w-4 h-4" />
               Activities
             </button>
             <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
@@ -106,56 +106,56 @@ function TasksPage() {
 
         {/* Main Content */}
         <div className="flex-1 flex">
-          {/* Task List */}
+          {/* Activity List */}
           <div className="flex-1 lg:flex-none lg:w-96 bg-white lg:border-r border-slate-200">
             <div className="p-4 lg:p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg font-semibold text-slate-800">All Tasks</h2>
-                <p className="text-sm text-slate-600 mt-1">Manage your task list</p>
+                <h2 className="text-lg font-semibold text-slate-800">All Activities</h2>
+                <p className="text-sm text-slate-600 mt-1">Manage your activities</p>
               </div>
               <Button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 flex items-center gap-2 whitespace-nowrap"
+                className="bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 flex items-center gap-2 whitespace-nowrap"
               >
                 <ApperIcon name="Plus" className="w-4 h-4" />
-                Add Task
+                Add Activity
               </Button>
             </div>
 
             <div className="overflow-y-auto" style={{ height: 'calc(100vh - 140px)' }}>
-              <TaskList
-                onSelectTask={handleSelectTask}
-                onEditTask={handleEditTask}
-                onDeleteTask={handleDeleteTask}
-                selectedTaskId={selectedTask?.id}
+              <ActivityList
+                onSelectActivity={handleSelectActivity}
+                onEditActivity={handleEditActivity}
+                onDeleteActivity={handleDeleteActivity}
+                selectedActivityId={selectedActivity?.id}
               />
             </div>
           </div>
 
-          {/* Task Detail - Desktop */}
+          {/* Activity Detail - Desktop */}
           <div className="hidden lg:flex flex-1">
-            {selectedTask ? (
-              <TaskDetail
-                task={selectedTask}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-                onBack={() => setSelectedTask(null)}
+            {selectedActivity ? (
+              <ActivityDetail
+                activity={selectedActivity}
+                onEdit={handleEditActivity}
+                onDelete={handleDeleteActivity}
+                onBack={() => setSelectedActivity(null)}
               />
             ) : (
               <div className="flex-1 flex items-center justify-center bg-slate-50">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ApperIcon name="CheckSquare" className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <ApperIcon name="Activity" className="w-8 h-8 text-purple-600" />
                   </div>
-                  <h3 className="text-lg font-medium text-slate-800 mb-2">No task selected</h3>
-                  <p className="text-slate-600">Choose a task from the list to view details</p>
+                  <h3 className="text-lg font-medium text-slate-800 mb-2">No activity selected</h3>
+                  <p className="text-slate-600">Choose an activity from the list to view details</p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Task Detail - Mobile Overlay */}
-          {showMobileDetail && selectedTask && (
+          {/* Activity Detail - Mobile Overlay */}
+          {showMobileDetail && selectedActivity && (
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -163,10 +163,10 @@ function TasksPage() {
               transition={{ type: 'tween', duration: 0.3 }}
               className="lg:hidden fixed inset-0 bg-white z-50 overflow-y-auto"
             >
-              <TaskDetail
-                task={selectedTask}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
+              <ActivityDetail
+                activity={selectedActivity}
+                onEdit={handleEditActivity}
+                onDelete={handleDeleteActivity}
                 onBack={handleCloseMobileDetail}
               />
             </motion.div>
@@ -176,17 +176,17 @@ function TasksPage() {
 
       {/* Modals */}
       {isModalOpen && (
-        <TaskModal
-          task={taskToEdit}
-          onSave={handleSaveTask}
+        <ActivityModal
+          activity={activityToEdit}
+          onSave={handleSaveActivity}
           onCancel={handleCloseModal}
         />
       )}
 
-      {isDeleteModalOpen && taskToDelete && (
-        <DeleteTaskModal
-          task={taskToDelete}
-          onConfirm={handleTaskDeleted}
+      {isDeleteModalOpen && activityToDelete && (
+        <DeleteActivityModal
+          activity={activityToDelete}
+          onConfirm={handleActivityDeleted}
           onCancel={handleCloseDeleteModal}
         />
       )}
@@ -194,4 +194,4 @@ function TasksPage() {
   );
 }
 
-export default TasksPage;
+export default ActivitiesPage;

@@ -13,6 +13,7 @@ import ContactsPage from "@/components/pages/ContactsPage";
 import CompaniesPage from "@/components/pages/CompaniesPage";
 import DealsPage from "@/components/pages/DealsPage";
 import TasksPage from "@/components/pages/TasksPage";
+import ActivitiesPage from "@/components/pages/ActivitiesPage";
 import QuotesPage from "@/components/pages/QuotesPage";
 export const AuthContext = createContext(null);
 
@@ -130,7 +131,8 @@ function App() {
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/deals" element={<DealsPage />} />
-          <Route path="/tasks" element={<TasksPage />} />
+<Route path="/tasks" element={<TasksPage />} />
+          <Route path="/activities" element={<ActivitiesPage />} />
           <Route path="/quotes" element={<QuotesPage />} />
         </Routes>
         <ToastContainer
