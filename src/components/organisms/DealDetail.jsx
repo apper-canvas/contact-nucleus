@@ -132,7 +132,9 @@ function DealDetail({ deal, onEdit, onDelete, onClose }) {
                     <div>
                       <label className="text-sm font-medium text-slate-700">Expected Close Date</label>
                       <p className="mt-1 text-sm text-slate-900">
-                        {new Date(deal.closeDate).toLocaleDateString()}
+{deal.closeDate && !isNaN(new Date(deal.closeDate).getTime())
+                          ? new Date(deal.closeDate).toLocaleDateString()
+                          : 'Not set'}
                       </p>
                     </div>
                   )}
@@ -169,16 +171,20 @@ function DealDetail({ deal, onEdit, onDelete, onClose }) {
                   {deal.createdAt && (
                     <div>
                       <label className="text-sm font-medium text-slate-700">Created</label>
-                      <p className="mt-1 text-sm text-slate-900">
-                        {new Date(deal.createdAt).toLocaleDateString()}
+<p className="mt-1 text-sm text-slate-900">
+                        {deal.createdAt && !isNaN(new Date(deal.createdAt).getTime())
+                          ? new Date(deal.createdAt).toLocaleDateString()
+                          : 'Not set'}
                       </p>
                     </div>
                   )}
                   {deal.updatedAt && (
                     <div>
                       <label className="text-sm font-medium text-slate-700">Last Updated</label>
-                      <p className="mt-1 text-sm text-slate-900">
-                        {new Date(deal.updatedAt).toLocaleDateString()}
+<p className="mt-1 text-sm text-slate-900">
+                        {deal.updatedAt && !isNaN(new Date(deal.updatedAt).getTime())
+                          ? new Date(deal.updatedAt).toLocaleDateString()
+                          : 'Not set'}
                       </p>
                     </div>
                   )}

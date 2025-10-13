@@ -7,8 +7,11 @@ import ApperIcon from '@/components/ApperIcon';
 function QuoteDetail({ quote, onEdit, onDelete, onClose }) {
   if (!quote) return null;
 
-  const isExpired = (expirationDate) => {
-    return expirationDate && new Date(expirationDate) <= new Date();
+const isExpired = (expirationDate) => {
+    if (!expirationDate) return false;
+    const expDate = new Date(expirationDate);
+    if (isNaN(expDate.getTime())) return false;
+    return expDate <= new Date();
   };
 
   return (
@@ -109,8 +112,10 @@ function QuoteDetail({ quote, onEdit, onDelete, onClose }) {
                     {quote.issueDate && (
                       <div>
                         <label className="text-sm font-medium text-slate-700">Issue Date</label>
-                        <p className="mt-1 text-sm text-slate-900">
-                          {new Date(quote.issueDate).toLocaleDateString()}
+<p className="mt-1 text-sm text-slate-900">
+                          {quote.issueDate && !isNaN(new Date(quote.issueDate).getTime())
+                            ? new Date(quote.issueDate).toLocaleDateString()
+                            : 'Not set'}
                         </p>
                       </div>
                     )}
@@ -157,7 +162,9 @@ function QuoteDetail({ quote, onEdit, onDelete, onClose }) {
                     <div>
                       <label className="text-sm font-medium text-slate-700">Created</label>
                       <p className="mt-1 text-sm text-slate-900">
-                        {new Date(quote.createdAt).toLocaleDateString()}
+{quote.createdAt && !isNaN(new Date(quote.createdAt).getTime())
+                          ? new Date(quote.createdAt).toLocaleDateString()
+                          : 'Not set'}
                       </p>
                     </div>
                   )}

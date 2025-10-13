@@ -212,7 +212,9 @@ href={`mailto:${contact.email_c}`}
                   </span>
                 </div>
 <span className="text-sm text-green-700 font-medium">
-                  {format(new Date(contact.created_at_c), "MMM dd, yyyy 'at' h:mm a")}
+                  {contact.created_at_c && !isNaN(new Date(contact.created_at_c).getTime()) 
+                    ? format(new Date(contact.created_at_c), "MMM dd, yyyy 'at' h:mm a")
+                    : 'N/A'}
                 </span>
               </div>
               
@@ -224,8 +226,10 @@ href={`mailto:${contact.email_c}`}
                       Last Updated
                     </span>
                   </div>
-                  <span className="text-sm text-blue-700 font-medium">
-                    {format(new Date(contact.updated_at_c), "MMM dd, yyyy 'at' h:mm a")}
+<span className="text-sm text-blue-700 font-medium">
+                    {contact.updated_at_c && !isNaN(new Date(contact.updated_at_c).getTime())
+                      ? format(new Date(contact.updated_at_c), "MMM dd, yyyy 'at' h:mm a")
+                      : 'N/A'}
                   </span>
                 </div>
               )}

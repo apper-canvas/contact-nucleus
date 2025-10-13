@@ -35,22 +35,25 @@ function TaskDetail({ task, onEdit, onDelete, onBack }) {
     }
   }
 
-  function formatDate(dateString) {
+function formatDate(dateString) {
     if (!dateString) return 'Not set';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Not set';
     return date.toLocaleDateString();
   }
 
-  function formatDateTime(dateString) {
+function formatDateTime(dateString) {
     if (!dateString) return 'Not set';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Not set';
     return date.toLocaleString();
   }
 
-  function isOverdue(dueDate) {
+function isOverdue(dueDate) {
     if (!dueDate) return false;
     const today = new Date();
     const due = new Date(dueDate);
+    if (isNaN(due.getTime())) return false;
     return due < today;
   }
 

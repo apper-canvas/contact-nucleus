@@ -131,7 +131,9 @@ function CompanyDetail({ company, onEdit, onDelete, onClose }) {
                     <div>
                       <label className="text-sm font-medium text-slate-700">Created</label>
                       <p className="mt-1 text-sm text-slate-900">
-                        {new Date(company.createdAt).toLocaleDateString()}
+{company.createdAt && !isNaN(new Date(company.createdAt).getTime())
+                          ? new Date(company.createdAt).toLocaleDateString()
+                          : 'Not set'}
                       </p>
                     </div>
                   )}
