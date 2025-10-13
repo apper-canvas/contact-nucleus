@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import ContactList from "@/components/organisms/ContactList";
-import ContactDetail from "@/components/organisms/ContactDetail";
-import ContactModal from "@/components/organisms/ContactModal";
-import DeleteContactModal from "@/components/organisms/DeleteContactModal";
-import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import ContactList from "@/components/organisms/ContactList";
+import DeleteContactModal from "@/components/organisms/DeleteContactModal";
+import ContactModal from "@/components/organisms/ContactModal";
+import ContactDetail from "@/components/organisms/ContactDetail";
 
 const ContactsPage = () => {
+  const navigate = useNavigate();
   const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -15,7 +17,6 @@ const ContactsPage = () => {
   const [contactToDelete, setContactToDelete] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showMobileDetail, setShowMobileDetail] = useState(false);
-
   const handleSelectContact = (contact) => {
     setSelectedContact(contact);
     setShowMobileDetail(true);
@@ -85,23 +86,27 @@ return (
               <div className="space-y-1">
                 <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
                   <ApperIcon name="Users" className="w-4 h-4" />
-                  All Contacts
+                  Contacts
                 </button>
-                <button onClick={() => window.location.href = '/companies'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <button onClick={() => navigate('/companies')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
                   <ApperIcon name="Building" className="w-4 h-4" />
                   Companies
                 </button>
-                <button onClick={() => window.location.href = '/deals'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <button onClick={() => navigate('/deals')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
                   <ApperIcon name="TrendingUp" className="w-4 h-4" />
                   Deals
                 </button>
-                <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <button onClick={() => navigate('/tasks')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                  <ApperIcon name="CheckSquare" className="w-4 h-4" />
+                  Tasks
+                </button>
+                <button onClick={() => navigate('/activities')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                  <ApperIcon name="Activity" className="w-4 h-4" />
+                  Activities
+                </button>
+                <button onClick={() => navigate('/quotes')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
                   <ApperIcon name="Receipt" className="w-4 h-4" />
                   Quotes
-                </button>
-                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-                  <ApperIcon name="Star" className="w-4 h-4" />
-                  Favorites
                 </button>
               </div>
             </nav>

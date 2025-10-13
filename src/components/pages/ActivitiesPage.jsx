@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import ActivityList from '@/components/organisms/ActivityList';
-import ActivityDetail from '@/components/organisms/ActivityDetail';
-import ActivityModal from '@/components/organisms/ActivityModal';
-import DeleteActivityModal from '@/components/organisms/DeleteActivityModal';
-import Button from '@/components/atoms/Button';
-import ApperIcon from '@/components/ApperIcon';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import ActivityList from "@/components/organisms/ActivityList";
+import ActivityModal from "@/components/organisms/ActivityModal";
+import DeleteActivityModal from "@/components/organisms/DeleteActivityModal";
+import ActivityDetail from "@/components/organisms/ActivityDetail";
 
 function ActivitiesPage() {
+  const navigate = useNavigate();
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -76,20 +78,20 @@ function ActivitiesPage() {
             </h1>
           </div>
           
-          <div className="flex-1 p-4 space-y-2">
-            <button onClick={() => window.location.href = '/'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+<div className="flex-1 p-4 space-y-2">
+            <button onClick={() => navigate('/contacts')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="Users" className="w-4 h-4" />
               Contacts
             </button>
-            <button onClick={() => window.location.href = '/companies'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Building2" className="w-4 h-4" />
+            <button onClick={() => navigate('/companies')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="Building" className="w-4 h-4" />
               Companies
             </button>
-            <button onClick={() => window.location.href = '/deals'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Handshake" className="w-4 h-4" />
+            <button onClick={() => navigate('/deals')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="TrendingUp" className="w-4 h-4" />
               Deals
             </button>
-            <button onClick={() => window.location.href = '/tasks'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+            <button onClick={() => navigate('/tasks')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="CheckSquare" className="w-4 h-4" />
               Tasks
             </button>
@@ -97,7 +99,7 @@ function ActivitiesPage() {
               <ApperIcon name="Activity" className="w-4 h-4" />
               Activities
             </button>
-            <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+            <button onClick={() => navigate('/quotes')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-blue-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="Receipt" className="w-4 h-4" />
               Quotes
             </button>

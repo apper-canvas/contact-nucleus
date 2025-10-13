@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import CompanyList from '@/components/organisms/CompanyList';
-import CompanyDetail from '@/components/organisms/CompanyDetail';
-import CompanyModal from '@/components/organisms/CompanyModal';
-import DeleteCompanyModal from '@/components/organisms/DeleteCompanyModal';
-import Button from '@/components/atoms/Button';
-import ApperIcon from '@/components/ApperIcon';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import CompanyList from "@/components/organisms/CompanyList";
+import CompanyDetail from "@/components/organisms/CompanyDetail";
+import CompanyModal from "@/components/organisms/CompanyModal";
+import DeleteCompanyModal from "@/components/organisms/DeleteCompanyModal";
 
 function CompaniesPage() {
+  const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [showCompanyModal, setShowCompanyModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -68,9 +70,9 @@ function CompaniesPage() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+<nav className="flex-1 p-4 space-y-2">
           <div className="space-y-1">
-            <button onClick={() => window.location.href = '/contacts'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+            <button onClick={() => navigate('/contacts')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="Users" className="w-4 h-4" />
               Contacts
             </button>
@@ -78,11 +80,19 @@ function CompaniesPage() {
               <ApperIcon name="Building" className="w-4 h-4" />
               Companies
             </button>
-            <button onClick={() => window.location.href = '/deals'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+            <button onClick={() => navigate('/deals')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="TrendingUp" className="w-4 h-4" />
               Deals
             </button>
-            <button onClick={() => window.location.href = '/quotes'} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+            <button onClick={() => navigate('/tasks')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="CheckSquare" className="w-4 h-4" />
+              Tasks
+            </button>
+            <button onClick={() => navigate('/activities')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="Activity" className="w-4 h-4" />
+              Activities
+            </button>
+            <button onClick={() => navigate('/quotes')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
               <ApperIcon name="Receipt" className="w-4 h-4" />
               Quotes
             </button>
