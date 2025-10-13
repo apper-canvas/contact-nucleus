@@ -33,18 +33,18 @@ function toUiFields(dbData) {
 
 // Convert UI format back to database format for queries
 function toDbFormat(uiData) {
-  uiData.name_c = dbData.name_c || '';
-  uiData.description_c = dbData.description_c || '';
-  uiData.due_date_c = dbData.due_date_c || '';
-  uiData.status_c = dbData.status_c || 'Open';
-  uiData.priority_c = dbData.priority_c || 'Medium';
-  uiData.assigned_to_c = dbData.assigned_to_c || null;
-  uiData.Id = dbData.Id;
-  uiData.CreatedOn = dbData.CreatedOn || '';
-  uiData.ModifiedOn = dbData.ModifiedOn || '';
-  uiData.Owner = dbData.Owner || null;
-  uiData.CreatedBy = dbData.CreatedBy || null;
-  uiData.ModifiedBy = dbData.ModifiedBy || null;
+  uiData.name_c = uiData.name_c || '';
+  uiData.description_c = uiData.description_c || '';
+  uiData.due_date_c = uiData.due_date_c || '';
+  uiData.status_c = uiData.status_c || 'Open';
+  uiData.priority_c = uiData.priority_c || 'Medium';
+  uiData.assigned_to_c = uiData.assigned_to_c || null;
+  uiData.Id = uiData.Id;
+  uiData.CreatedOn = uiData.CreatedOn || '';
+  uiData.ModifiedOn = uiData.ModifiedOn || '';
+  uiData.Owner = uiData.Owner || null;
+  uiData.CreatedBy = uiData.CreatedBy || null;
+  uiData.ModifiedBy = uiData.ModifiedBy || null;
   
   return uiData;
 }
