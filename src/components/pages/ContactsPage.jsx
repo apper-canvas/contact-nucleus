@@ -119,7 +119,29 @@ return (
             refreshTrigger={refreshTrigger}
           />
         </div>
-      </div>
+</div>
+
+      {/* Contact Detail Overlay */}
+      {selectedContact && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <ContactDetail
+              contact={selectedContact}
+              onClose={() => {
+                setSelectedContact(null);
+                setShowMobileDetail(false);
+              }}
+              onEdit={() => {
+                handleEditContact(selectedContact);
+                setSelectedContact(null);
+              }}
+              onDelete={() => {
+                handleDeleteContact(selectedContact);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Modals */}
       <ContactModal
