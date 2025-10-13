@@ -60,7 +60,7 @@ const handleContactDeleted = (deletedContact) => {
   };
 
 return (
-    <div className="h-screen bg-green-50 overflow-hidden">
+<div className="flex min-h-screen bg-green-50">
       {/* Main Content */}
       <div className="h-full flex">
         {/* Left Sidebar Navigation */}
