@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
-import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
 
 const FilterDropdown = ({ 
   options, 
@@ -12,8 +12,23 @@ const FilterDropdown = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Helper to extract label from option (handles both string and object formats)
+  const getOptionLabel = (option) => {
+    if (typeof option === 'object' && option !== null) {
+      return option.label || option.value || '';
+    }
+    return option;
+  };
+// Helper to extract value from option
+  const getOptionValue = (option) => {
+    if (typeof option === 'object' && option !== null) {
+      return option.value || option.label || '';
+    }
+    return option;
+  };
+
   const handleSelect = (option) => {
-    onChange(option);
+    onChange(getOptionValue(option));
     setIsOpen(false);
   };
 
@@ -24,8 +39,8 @@ const FilterDropdown = ({
         onClick={() => setIsOpen(!isOpen)}
         className="justify-between min-w-[140px] bg-white shadow-sm hover:shadow-md"
       >
-        <span className="truncate">
-          {value || placeholder}
+<span className="truncate">
+          {value ? getOptionLabel(value) : placeholder}
         </span>
         <ApperIcon 
           name="ChevronDown" 
@@ -49,20 +64,25 @@ const FilterDropdown = ({
             >
               All
             </button>
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => handleSelect(option)}
-                className={cn(
-                  "w-full px-4 py-2 text-left text-sm transition-colors duration-150",
-                  value === option
-                    ? "bg-primary-50 text-primary-700 font-medium"
-                    : "text-slate-700 hover:bg-slate-50"
-                )}
-              >
-                {option}
-              </button>
-            ))}
+{options.map((option) => {
+              const optionValue = getOptionValue(option);
+              const optionLabel = getOptionLabel(option);
+              
+              return (
+                <button
+                  key={optionValue}
+                  onClick={() => handleSelect(option)}
+                  className={cn(
+                    "w-full px-4 py-2 text-left text-sm transition-colors duration-150",
+                    value === optionValue
+                      ? "bg-primary-50 text-primary-700 font-medium"
+                      : "text-slate-700 hover:bg-slate-50"
+                  )}
+                >
+                  {optionLabel}
+                </button>
+              );
+            })}
           </div>
         </>
       )}
