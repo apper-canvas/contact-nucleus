@@ -1,14 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CompanyForm from './CompanyForm';
+import CompanyDetail from './CompanyDetail';
 import ApperIcon from '@/components/ApperIcon';
 
-function CompanyModal({ company, onSave, onClose }) {
+function CompanyModal({ mode = 'create', company, onSave, onEdit, onDelete, onClose }) {
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
+
+  const isViewMode = mode === 'view';
+  const isEditMode = mode === 'edit';
 
   return (
     <div
@@ -21,10 +25,10 @@ function CompanyModal({ company, onSave, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.2 }}
       >
-        {/* Header */}
+{/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-200">
           <h2 className="text-xl font-semibold text-slate-900">
-            {company ? 'Edit Company' : 'Add New Company'}
+            {isViewMode ? 'Company Details' : company ? 'Edit Company' : 'Add New Company'}
           </h2>
           <button
             onClick={onClose}
@@ -34,13 +38,25 @@ function CompanyModal({ company, onSave, onClose }) {
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          <CompanyForm
-            company={company}
-            onSave={onSave}
-            onCancel={onClose}
-          />
+{/* Content */}
+        <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+          {isViewMode ? (
+            <CompanyDetail
+              company={company}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              onClose={onClose}
+              isModal={true}
+            />
+          ) : (
+            <div className="p-6">
+              <CompanyForm
+                company={company}
+                onSave={onSave}
+                onCancel={onClose}
+              />
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

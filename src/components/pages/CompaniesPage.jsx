@@ -10,15 +10,19 @@ import DeleteCompanyModal from "@/components/organisms/DeleteCompanyModal";
 
 function CompaniesPage() {
   const navigate = useNavigate();
-  const [selectedCompany, setSelectedCompany] = useState(null);
-  const [showCompanyModal, setShowCompanyModal] = useState(false);
+const [showCompanyModal, setShowCompanyModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingCompany, setEditingCompany] = useState(null);
+  const [viewingCompany, setViewingCompany] = useState(null);
   const [companyToDelete, setCompanyToDelete] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [detailMode, setDetailMode] = useState('view');
 
-  const handleSelectCompany = (company) => {
-    setSelectedCompany(company);
+const handleSelectCompany = (company) => {
+    setViewingCompany(company);
+    setDetailMode('view');
+    setShowDetailModal(true);
   };
 
   const handleEditCompany = (company) => {
@@ -37,18 +41,47 @@ function CompaniesPage() {
     setEditingCompany(null);
   };
 
-  const handleCompanyDeleted = (deletedCompany) => {
+const handleCompanyDeleted = (deletedCompany) => {
     setRefreshKey(prev => prev + 1);
-    if (selectedCompany?.Id === deletedCompany.Id) {
-      setSelectedCompany(null);
+    if (viewingCompany?.Id === deletedCompany.Id) {
+      setViewingCompany(null);
+      setShowDetailModal(false);
     }
     setShowDeleteModal(false);
     setCompanyToDelete(null);
   };
 
-  const handleCloseModal = () => {
+const handleCloseModal = () => {
     setShowCompanyModal(false);
     setEditingCompany(null);
+  };
+
+  const handleCloseDetailModal = () => {
+    setShowDetailModal(false);
+    setViewingCompany(null);
+    setDetailMode('view');
+  };
+
+  const handleEditFromDetail = (company) => {
+    setEditingCompany(company);
+    setDetailMode('edit');
+  };
+
+  const handleSaveFromDetail = async (companyData) => {
+    await handleSaveCompany(companyData);
+    if (companyData.Id) {
+      // If editing, refresh the detail view
+      setViewingCompany({ ...viewingCompany, ...companyData });
+      setDetailMode('view');
+    } else {
+      // If creating new, close the modal
+      handleCloseDetailModal();
+    }
+  };
+
+  const handleDeleteFromDetail = (company) => {
+    handleCloseDetailModal();
+    handleDeleteCompany(company);
   };
 
   const handleCloseDeleteModal = () => {
@@ -56,9 +89,6 @@ function CompaniesPage() {
     setCompanyToDelete(null);
   };
 
-  const handleCloseMobileDetail = () => {
-    setSelectedCompany(null);
-  };
 
   return (
 <div className="flex min-h-screen bg-green-50">
@@ -130,47 +160,30 @@ function CompaniesPage() {
         </div>
 
         {/* Company List Content */}
-        <CompanyList
+<CompanyList
           refreshKey={refreshKey}
           onSelectCompany={handleSelectCompany}
           onEditCompany={handleEditCompany}
           onDeleteCompany={handleDeleteCompany}
-          selectedCompany={selectedCompany}
         />
       </div>
 
-        {/* Company Detail */}
-        <motion.div
-          className={`flex-1 ${
-            selectedCompany
-              ? 'fixed inset-0 lg:relative lg:inset-auto bg-white z-50'
-              : 'hidden lg:flex'
-          } flex-col`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          {selectedCompany ? (
-            <CompanyDetail
-              company={selectedCompany}
-              onEdit={handleEditCompany}
-              onDelete={handleDeleteCompany}
-              onClose={handleCloseMobileDetail}
-            />
-          ) : (
-<div className="flex items-center justify-center h-full text-slate-500">
-              <div className="text-center">
-                <ApperIcon name="Building" className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Select a company to view details</p>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      {showCompanyModal && (
+{showCompanyModal && (
         <CompanyModal
           company={editingCompany}
           onSave={handleSaveCompany}
           onClose={handleCloseModal}
+        />
+      )}
+
+      {showDetailModal && (
+        <CompanyModal
+          mode={detailMode}
+          company={viewingCompany}
+          onSave={handleSaveFromDetail}
+          onEdit={handleEditFromDetail}
+          onDelete={handleDeleteFromDetail}
+          onClose={handleCloseDetailModal}
         />
       )}
 
