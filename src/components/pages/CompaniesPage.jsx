@@ -158,13 +158,12 @@ function CompaniesPage() {
               onClose={handleCloseMobileDetail}
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-slate-500">
+<div className="flex items-center justify-center h-full text-slate-500">
               <div className="text-center">
                 <ApperIcon name="Building" className="w-12 h-12 mx-auto mb-4 opacity-50" />
                 <p>Select a company to view details</p>
               </div>
             </div>
-</div>
           )}
         </motion.div>
       </div>
