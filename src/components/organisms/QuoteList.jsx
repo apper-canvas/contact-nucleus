@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { quoteService } from '@/services/api/quoteService';
+import QuoteCard from '@/components/molecules/QuoteCard';
 import SearchBar from '@/components/molecules/SearchBar';
 import FilterDropdown from '@/components/molecules/FilterDropdown';
 import Loading from '@/components/ui/Loading';
 import Empty from '@/components/ui/Empty';
 import Error from '@/components/ui/Error';
-import ApperIcon from '@/components/ApperIcon';
-import Badge from '@/components/atoms/Badge';
-
 function QuoteList({ refreshKey, onSelectQuote, onEditQuote, onDeleteQuote, selectedQuote }) {
   const [quotes, setQuotes] = useState([]);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
@@ -108,29 +106,33 @@ function QuoteList({ refreshKey, onSelectQuote, onEditQuote, onDeleteQuote, sele
     );
   }
 
-  return (
+return (
     <div className="flex-1 flex flex-col">
       {/* Search and Filter */}
-      <div className="p-4 space-y-3 border-b border-slate-200">
-        <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search quotes..."
-        />
-        <FilterDropdown
-          value={filterValue}
-          onChange={setFilterValue}
-          options={[
-            { value: 'all', label: 'All Quotes' },
-            { value: 'active', label: 'Active' },
-            { value: 'expired', label: 'Expired' },
-            { value: 'recent', label: 'Recent' }
-          ]}
-        />
+      <div className="p-6 border-b border-slate-200">
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <SearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search quotes..."
+            />
+          </div>
+          <FilterDropdown
+            value={filterValue}
+            onChange={setFilterValue}
+            options={[
+              { value: 'all', label: 'All Quotes' },
+              { value: 'active', label: 'Active' },
+              { value: 'expired', label: 'Expired' },
+              { value: 'recent', label: 'Recent' }
+            ]}
+          />
+        </div>
       </div>
 
-      {/* Quote List */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Quote Cards Grid */}
+      <div className="flex-1 overflow-y-auto bg-slate-50">
         {filteredQuotes.length === 0 ? (
           <Empty
             icon="Receipt"
@@ -140,81 +142,21 @@ function QuoteList({ refreshKey, onSelectQuote, onEditQuote, onDeleteQuote, sele
             onAction={() => onEditQuote(null)}
           />
         ) : (
-          <div className="divide-y divide-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
             {filteredQuotes.map((quote, index) => (
               <motion.div
                 key={quote.Id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className={`p-4 cursor-pointer hover:bg-slate-50 transition-colors ${
-                  selectedQuote?.Id === quote.Id ? 'bg-primary-50 border-r-2 border-primary-500' : ''
-                }`}
-                onClick={() => handleQuoteClick(quote)}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-sm font-medium text-slate-900 truncate">
-                        {quote.name || 'Unnamed Quote'}
-                      </h3>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 mb-2">
-                      {quote.amount > 0 && (
-                        <span className="text-sm font-medium text-green-600">
-                          ${quote.amount.toLocaleString()}
-                        </span>
-                      )}
-                      {quote.expirationDate && (
-                        <Badge 
-                          className={isExpired(quote.expirationDate) ? 
-                            'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                          } 
-                          size="sm"
-                        >
-                          {isExpired(quote.expirationDate) ? 'Expired' : 'Active'}
-                        </Badge>
-                      )}
-                    </div>
-
-                    {quote.company?.Name && (
-                      <p className="text-xs text-slate-600 mb-2">
-                        {quote.company.Name}
-                      </p>
-                    )}
-
-                    <div className="space-y-1">
-                      {quote.issueDate && (
-                        <p className="text-xs text-slate-500">
-                          Issued: {new Date(quote.issueDate).toLocaleDateString()}
-                        </p>
-                      )}
-                      {quote.expirationDate && (
-                        <p className="text-xs text-slate-500">
-                          Expires: {new Date(quote.expirationDate).toLocaleDateString()}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 ml-2">
-                    <button
-                      onClick={(e) => handleEditClick(e, quote)}
-                      className="p-1 text-slate-400 hover:text-slate-600 rounded"
-                      title="Edit quote"
-                    >
-                      <ApperIcon name="Edit" className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteClick(e, quote)}
-                      className="p-1 text-slate-400 hover:text-red-600 rounded"
-                      title="Delete quote"
-                    >
-                      <ApperIcon name="Trash2" className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+                <QuoteCard
+                  quote={quote}
+                  isSelected={selectedQuote?.Id === quote.Id}
+                  onSelect={handleQuoteClick}
+                  onEdit={handleEditClick}
+                  onDelete={handleDeleteClick}
+                />
               </motion.div>
             ))}
           </div>

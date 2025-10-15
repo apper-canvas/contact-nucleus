@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { activityService } from '@/services/api/activityService';
-import Badge from '@/components/atoms/Badge';
-import ApperIcon from '@/components/ApperIcon';
-import Loading from '@/components/ui/Loading';
-import Empty from '@/components/ui/Empty';
-import Error from '@/components/ui/Error';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { activityService } from "@/services/api/activityService";
+import ActivityCard from "@/components/molecules/ActivityCard";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
 
-function ActivityList({ onSelectActivity, onEditActivity, onDeleteActivity, selectedActivityId }) {
+function ActivityList({ selectedActivityId, onSelectActivity, onEditActivity, onDeleteActivity }) {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,76 +72,37 @@ function ActivityList({ onSelectActivity, onEditActivity, onDeleteActivity, sele
   if (error) return <Error message={error} onRetry={loadActivities} />;
   if (activities.length === 0) return <Empty message="No activities found" />;
 
-  return (
-    <div className="divide-y divide-slate-200">
-      {activities.map((activity) => (
-        <motion.div
-          key={activity.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={`p-4 hover:bg-slate-50 cursor-pointer transition-colors duration-200 ${
-            selectedActivityId === activity.id ? 'bg-purple-50 border-r-2 border-purple-500' : ''
-          }`}
-          onClick={() => onSelectActivity(activity)}
-        >
-          <div className="flex items-start justify-between mb-2">
-            <h3 className="font-medium text-slate-900 truncate flex-1 mr-2">
-              {activity.subject}
-            </h3>
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEditActivity(activity);
-                }}
-                className="p-1 text-slate-400 hover:text-purple-600 transition-colors"
-              >
-                <ApperIcon name="Edit2" className="w-4 h-4" />
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onDeleteActivity(activity);
-                }}
-                className="p-1 text-slate-400 hover:text-red-600 transition-colors"
-              >
-                <ApperIcon name="Trash2" className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          {activity.description && (
-            <p className="text-sm text-slate-600 mb-3 line-clamp-2">
-              {activity.description}
-            </p>
-          )}
-
-          <div className="flex items-center gap-2 mb-2">
-            <Badge className={`text-xs px-2 py-1 ${getActivityTypeColor(activity.activityType)}`}>
-              {activity.activityType || 'Call'}
-            </Badge>
-            <Badge className={`text-xs px-2 py-1 ${getStatusColor(activity.status)}`}>
-              {activity.status || 'Planned'}
-            </Badge>
-          </div>
-
-          {activity.dueDate && (
-            <div className={`flex items-center gap-1 text-xs ${
-              isOverdue(activity.dueDate, activity.status) ? 'text-red-600' : 'text-slate-500'
-            }`}>
-              <ApperIcon name="Calendar" className="w-3 h-3" />
-              <span>Due: {formatDate(activity.dueDate)}</span>
-              {isOverdue(activity.dueDate, activity.status) && (
-                <Badge className="bg-red-100 text-red-700 border-red-200 text-xs px-1 py-0.5 ml-1">
-                  Overdue
-                </Badge>
-              )}
-            </div>
-          )}
-        </motion.div>
-      ))}
+return (
+    <div className="flex-1 overflow-y-auto bg-slate-50">
+      {activities.length === 0 ? (
+        <Empty
+          icon="Activity"
+          title="No activities found"
+          description="Start by adding your first activity"
+          actionLabel="Add Activity"
+          onAction={() => {}}
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+          {activities.map((activity, index) => (
+            <motion.div
+              key={activity.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <ActivityCard
+                activity={activity}
+                isSelected={selectedActivityId === activity.id}
+                onSelect={onSelectActivity}
+                onEdit={onEditActivity}
+                onDelete={onDeleteActivity}
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
-
 export default ActivityList;

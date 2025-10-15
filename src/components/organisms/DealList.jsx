@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
-import { dealService } from '@/services/api/dealService';
-import SearchBar from '@/components/molecules/SearchBar';
-import FilterDropdown from '@/components/molecules/FilterDropdown';
-import Loading from '@/components/ui/Loading';
-import Empty from '@/components/ui/Empty';
-import Error from '@/components/ui/Error';
-import ApperIcon from '@/components/ApperIcon';
-import Badge from '@/components/atoms/Badge';
-
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { dealService } from "@/services/api/dealService";
+import DealCard from "@/components/molecules/DealCard";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import FilterDropdown from "@/components/molecules/FilterDropdown";
+import SearchBar from "@/components/molecules/SearchBar";
 function DealList({ refreshKey, onSelectDeal, onEditDeal, onDeleteDeal, selectedDeal }) {
   const [deals, setDeals] = useState([]);
   const [filteredDeals, setFilteredDeals] = useState([]);
@@ -126,28 +124,32 @@ function DealList({ refreshKey, onSelectDeal, onEditDeal, onDeleteDeal, selected
   }
 
   return (
-    <div className="flex-1 flex flex-col">
+<div className="flex-1 flex flex-col">
       {/* Search and Filter */}
-      <div className="p-4 space-y-3 border-b border-slate-200">
-        <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search deals..."
-        />
-        <FilterDropdown
-          value={filterValue}
-          onChange={setFilterValue}
-          options={[
-            { value: 'all', label: 'All Deals' },
-            { value: 'active', label: 'Active' },
-            { value: 'won', label: 'Won' },
-            { value: 'lost', label: 'Lost' }
-          ]}
-        />
+      <div className="p-6 border-b border-slate-200">
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <SearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search deals..."
+            />
+          </div>
+          <FilterDropdown
+            value={filterValue}
+            onChange={setFilterValue}
+            options={[
+              { value: 'all', label: 'All Deals' },
+              { value: 'active', label: 'Active' },
+              { value: 'won', label: 'Won' },
+              { value: 'lost', label: 'Lost' }
+            ]}
+          />
+        </div>
       </div>
 
-      {/* Deal List */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Deal Cards Grid */}
+      <div className="flex-1 overflow-y-auto bg-slate-50">
         {filteredDeals.length === 0 ? (
           <Empty
             icon="TrendingUp"
@@ -157,73 +159,25 @@ function DealList({ refreshKey, onSelectDeal, onEditDeal, onDeleteDeal, selected
             onAction={() => onEditDeal(null)}
           />
         ) : (
-          <div className="divide-y divide-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
             {filteredDeals.map((deal, index) => (
               <motion.div
                 key={deal.Id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className={`p-4 cursor-pointer hover:bg-slate-50 transition-colors ${
-                  selectedDeal?.Id === deal.Id ? 'bg-primary-50 border-r-2 border-primary-500' : ''
-                }`}
-                onClick={() => handleDealClick(deal)}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-sm font-medium text-slate-900 truncate">
-                        {deal.name || 'Unnamed Deal'}
-                      </h3>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 mb-2">
-                      {deal.amount > 0 && (
-                        <span className="text-sm font-medium text-green-600">
-                          ${deal.amount.toLocaleString()}
-                        </span>
-                      )}
-                      {deal.stage && (
-                        <Badge className={getStageColor(deal.stage)} size="sm">
-                          {deal.stage}
-                        </Badge>
-                      )}
-                    </div>
-
-                    {deal.company?.Name && (
-                      <p className="text-xs text-slate-600 mb-2">
-                        {deal.company.Name}
-                      </p>
-                    )}
-
-                    {deal.closeDate && (
-                      <p className="text-xs text-slate-500">
-                        Close: {new Date(deal.closeDate).toLocaleDateString()}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-1 ml-2">
-                    <button
-                      onClick={(e) => handleEditClick(e, deal)}
-                      className="p-1 text-slate-400 hover:text-slate-600 rounded"
-                      title="Edit deal"
-                    >
-                      <ApperIcon name="Edit" className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteClick(e, deal)}
-                      className="p-1 text-slate-400 hover:text-red-600 rounded"
-                      title="Delete deal"
-                    >
-                      <ApperIcon name="Trash2" className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+                <DealCard
+                  deal={deal}
+                  isSelected={selectedDeal?.Id === deal.Id}
+                  onSelect={handleDealClick}
+                  onEdit={handleEditClick}
+                  onDelete={handleDeleteClick}
+                />
               </motion.div>
             ))}
           </div>
-        )}
+)}
       </div>
     </div>
   );
