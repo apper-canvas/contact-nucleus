@@ -166,7 +166,6 @@ function CompaniesPage() {
             </div>
           )}
         </motion.div>
-      </div>
       {showCompanyModal && (
         <CompanyModal
           company={editingCompany}
