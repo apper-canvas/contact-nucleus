@@ -113,17 +113,11 @@ function CompaniesPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex">
-        {/* Company List */}
-        <div className="flex-1 lg:flex-none lg:w-96 flex flex-col bg-white border-r border-slate-200">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-slate-200">
-            <div className="flex items-center gap-4">
-              <button className="lg:hidden">
-                <ApperIcon name="Menu" className="w-5 h-5" />
-              </button>
-              <h2 className="text-lg font-semibold text-slate-900">All Companies</h2>
-            </div>
+<div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 bg-white border-b border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900">All Companies</h2>
+          <div className="flex items-center gap-4">
             <Button
               onClick={() => setShowCompanyModal(true)}
               size="sm"
@@ -133,16 +127,17 @@ function CompaniesPage() {
               Add Company
             </Button>
           </div>
-
-          {/* Company List Content */}
-          <CompanyList
-            refreshKey={refreshKey}
-            onSelectCompany={handleSelectCompany}
-            onEditCompany={handleEditCompany}
-            onDeleteCompany={handleDeleteCompany}
-            selectedCompany={selectedCompany}
-          />
         </div>
+
+        {/* Company List Content */}
+        <CompanyList
+          refreshKey={refreshKey}
+          onSelectCompany={handleSelectCompany}
+          onEditCompany={handleEditCompany}
+          onDeleteCompany={handleDeleteCompany}
+          selectedCompany={selectedCompany}
+        />
+      </div>
 
         {/* Company Detail */}
         <motion.div
@@ -169,11 +164,10 @@ function CompaniesPage() {
                 <p>Select a company to view details</p>
               </div>
             </div>
+</div>
           )}
         </motion.div>
       </div>
-
-      {/* Modals */}
       {showCompanyModal && (
         <CompanyModal
           company={editingCompany}

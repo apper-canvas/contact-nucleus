@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { companyService } from '@/services/api/companyService';
 import SearchBar from '@/components/molecules/SearchBar';
 import FilterDropdown from '@/components/molecules/FilterDropdown';
+import Button from '@/components/atoms/Button';
 import Loading from '@/components/ui/Loading';
 import Empty from '@/components/ui/Empty';
 import Error from '@/components/ui/Error';
@@ -103,24 +104,28 @@ function CompanyList({ refreshKey, onSelectCompany, onEditCompany, onDeleteCompa
   return (
     <div className="flex-1 flex flex-col">
       {/* Search and Filter */}
-      <div className="p-4 space-y-3 border-b border-slate-200">
-        <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search companies..."
-        />
-        <FilterDropdown
-          value={filterValue}
-          onChange={setFilterValue}
-          options={[
-            { value: 'all', label: 'All Companies' },
-            { value: 'recent', label: 'Recent' }
-          ]}
-        />
+<div className="p-6 border-b border-slate-200">
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <SearchBar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search companies..."
+            />
+          </div>
+          <FilterDropdown
+            value={filterValue}
+            onChange={setFilterValue}
+            options={[
+              { value: 'all', label: 'All Companies' },
+              { value: 'recent', label: 'Recent' }
+            ]}
+          />
+        </div>
       </div>
 
-      {/* Company List */}
-      <div className="flex-1 overflow-y-auto">
+{/* Company Cards Grid */}
+      <div className="flex-1 overflow-y-auto bg-slate-50">
         {filteredCompanies.length === 0 ? (
           <Empty
             icon="Building"
@@ -130,64 +135,70 @@ function CompanyList({ refreshKey, onSelectCompany, onEditCompany, onDeleteCompa
             onAction={() => onEditCompany(null)}
           />
         ) : (
-          <div className="divide-y divide-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
             {filteredCompanies.map((company, index) => (
               <motion.div
                 key={company.Id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className={`p-4 cursor-pointer hover:bg-slate-50 transition-colors ${
-                  selectedCompany?.Id === company.Id ? 'bg-primary-50 border-r-2 border-primary-500' : ''
+                className={`bg-white rounded-xl border transition-all duration-200 cursor-pointer overflow-hidden ${
+                  selectedCompany?.Id === company.Id 
+                    ? 'border-primary-500 shadow-lg ring-2 ring-primary-200' 
+                    : 'border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1'
                 }`}
                 onClick={() => handleCompanyClick(company)}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-sm font-medium text-slate-900 truncate">
-                        {company.name || 'Unnamed Company'}
-                      </h3>
-                    </div>
-                    
-                    {company.city && company.state && (
-                      <p className="text-xs text-slate-600 mb-2">
-                        {company.city}, {company.state}
-                      </p>
-                    )}
-
-                    {company.tags && company.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-2">
-                        {company.tags.slice(0, 2).map((tag, i) => (
-                          <Badge key={i} variant="secondary" size="sm">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {company.tags.length > 2 && (
-                          <Badge variant="secondary" size="sm">
-                            +{company.tags.length - 2}
-                          </Badge>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-1 ml-2">
+                {/* Card Header */}
+                <div className="relative bg-gradient-to-br from-primary-500 to-primary-600 p-6">
+                  <div className="absolute top-3 right-3 flex gap-1">
                     <button
                       onClick={(e) => handleEditClick(e, company)}
-                      className="p-1 text-slate-400 hover:text-slate-600 rounded"
+                      className="p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg transition-colors"
                       title="Edit company"
                     >
-                      <ApperIcon name="Edit" className="w-4 h-4" />
+                      <ApperIcon name="Edit" className="w-4 h-4 text-white" />
                     </button>
                     <button
                       onClick={(e) => handleDeleteClick(e, company)}
-                      className="p-1 text-slate-400 hover:text-red-600 rounded"
+                      className="p-2 bg-white/20 hover:bg-red-500 backdrop-blur-sm rounded-lg transition-colors"
                       title="Delete company"
                     >
-                      <ApperIcon name="Trash2" className="w-4 h-4" />
+                      <ApperIcon name="Trash2" className="w-4 h-4 text-white" />
                     </button>
                   </div>
+                  <div className="flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl">
+                    <ApperIcon name="Building" className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2 truncate">
+                    {company.name || 'Unnamed Company'}
+                  </h3>
+                  
+                  {company.city && company.state && (
+                    <div className="flex items-center gap-2 text-sm text-slate-600 mb-3">
+                      <ApperIcon name="MapPin" className="w-4 h-4" />
+                      <span className="truncate">{company.city}, {company.state}</span>
+                    </div>
+                  )}
+
+                  {company.tags && company.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {company.tags.slice(0, 3).map((tag, i) => (
+                        <Badge key={i} variant="secondary" size="sm">
+                          {tag}
+                        </Badge>
+                      ))}
+                      {company.tags.length > 3 && (
+                        <Badge variant="secondary" size="sm">
+                          +{company.tags.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
