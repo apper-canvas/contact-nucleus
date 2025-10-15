@@ -63,42 +63,53 @@ function DealsPage() {
   return (
 <div className="flex min-h-screen bg-green-50">
       {/* Sidebar */}
-      <div className="hidden lg:flex lg:flex-col lg:w-64 bg-white border-r border-slate-200">
-{/* Header */}
-        <div className="p-4 border-b border-slate-200">
-          <h1 className="text-2xl font-bold text-slate-900 mb-1">HubCRM</h1>
-          <h2 className="text-lg font-semibold text-slate-700">Deals</h2>
-        </div>
-
-        {/* Navigation */}
-<nav className="flex-1 p-4 space-y-2">
-          <div className="space-y-1">
-            <button onClick={() => navigate('/contacts')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Users" className="w-4 h-4" />
-              Contacts
-            </button>
-            <button onClick={() => navigate('/companies')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Building" className="w-4 h-4" />
-              Companies
-            </button>
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
-              <ApperIcon name="TrendingUp" className="w-4 h-4" />
-              Deals
-            </button>
-            <button onClick={() => navigate('/tasks')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="CheckSquare" className="w-4 h-4" />
-              Tasks
-            </button>
-            <button onClick={() => navigate('/activities')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Activity" className="w-4 h-4" />
-              Activities
-            </button>
-            <button onClick={() => navigate('/quotes')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
-              <ApperIcon name="Receipt" className="w-4 h-4" />
-              Quotes
-            </button>
+      <div className="w-80 border-r border-green-200 bg-white shadow-sm">
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="p-6 border-b border-green-200 bg-gradient-to-r from-green-50 to-white">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                <ApperIcon name="TrendingUp" className="w-7 h-7 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                  HubCRM
+                </h1>
+                <p className="text-sm text-slate-600">Customer Relationship Management</p>
+              </div>
+            </div>
           </div>
-        </nav>
+          
+          {/* Navigation */}
+          <nav className="flex-1 p-4 space-y-2">
+            <div className="space-y-1">
+              <button onClick={() => navigate('/contacts')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <ApperIcon name="Users" className="w-4 h-4" />
+                Contacts
+              </button>
+              <button onClick={() => navigate('/companies')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <ApperIcon name="Building" className="w-4 h-4" />
+                Companies
+              </button>
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
+                <ApperIcon name="TrendingUp" className="w-4 h-4" />
+                Deals
+              </button>
+              <button onClick={() => navigate('/tasks')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <ApperIcon name="CheckSquare" className="w-4 h-4" />
+                Tasks
+              </button>
+              <button onClick={() => navigate('/activities')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <ApperIcon name="Activity" className="w-4 h-4" />
+                Activities
+              </button>
+              <button onClick={() => navigate('/quotes')} className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                <ApperIcon name="Receipt" className="w-4 h-4" />
+                Quotes
+              </button>
+            </div>
+          </nav>
+        </div>
       </div>
 
       {/* Main Content */}
