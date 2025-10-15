@@ -15,6 +15,7 @@ import DealsPage from "@/components/pages/DealsPage";
 import TasksPage from "@/components/pages/TasksPage";
 import ActivitiesPage from "@/components/pages/ActivitiesPage";
 import QuotesPage from "@/components/pages/QuotesPage";
+import InvoicesPage from "@/components/pages/InvoicesPage";
 export const AuthContext = createContext(null);
 
 function App() {
@@ -127,13 +128,14 @@ function App() {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
           <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
-          <Route path="/" element={<ContactsPage />} />
+<Route path="/" element={<ContactsPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/deals" element={<DealsPage />} />
 <Route path="/tasks" element={<TasksPage />} />
           <Route path="/activities" element={<ActivitiesPage />} />
           <Route path="/quotes" element={<QuotesPage />} />
+          <Route path="/invoices" element={<InvoicesPage />} />
         </Routes>
         <ToastContainer
           position="top-right"

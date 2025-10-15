@@ -81,7 +81,7 @@ function QuotesPage() {
         </div>
         
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+<nav className="flex-1 p-4 space-y-2">
           <div className="space-y-1">
             <button
               onClick={() => navigate("/contacts")}
@@ -117,6 +117,12 @@ function QuotesPage() {
               className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
               <ApperIcon name="Receipt" className="w-4 h-4" />
               Quotes
+            </button>
+            <button
+              onClick={() => navigate("/invoices")}
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
+              <ApperIcon name="FileText" className="w-4 h-4" />
+              Invoices
             </button>
           </div>
         </nav>
