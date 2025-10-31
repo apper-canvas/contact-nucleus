@@ -6,7 +6,7 @@ import Button from "@/components/atoms/Button";
 import DealModal from "@/components/organisms/DealModal";
 import DealList from "@/components/organisms/DealList";
 import DeleteDealModal from "@/components/organisms/DeleteDealModal";
-import DealDetail from "@/components/organisms/DealDetail";
+import DealDetailModal from "@/components/organisms/DealDetailModal";
 
 function DealsPage() {
   const navigate = useNavigate();
@@ -145,40 +145,23 @@ function DealsPage() {
         </div>
 
         {/* Deal Detail */}
-        <motion.div
-          className={`flex-1 ${
-            selectedDeal
-              ? 'fixed inset-0 lg:relative lg:inset-auto bg-white z-50'
-              : 'hidden lg:flex'
-          } flex-col`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          {selectedDeal ? (
-            <DealDetail
-              deal={selectedDeal}
-              onEdit={handleEditDeal}
-              onDelete={handleDeleteDeal}
-              onClose={handleCloseMobileDetail}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full text-slate-500">
-              <div className="text-center">
-                <ApperIcon name="TrendingUp" className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Select a deal to view details</p>
-              </div>
-            </div>
-          )}
-        </motion.div>
       </div>
 
       {/* Modals */}
-      {showDealModal && (
+{showDealModal && (
         <DealModal
           deal={editingDeal}
           onSave={handleSaveDeal}
           onClose={handleCloseModal}
+        />
+      )}
+
+      {selectedDeal && (
+        <DealDetailModal
+          deal={selectedDeal}
+          onEdit={handleEditDeal}
+          onDelete={handleDeleteDeal}
+          onClose={handleCloseMobileDetail}
         />
       )}
 
