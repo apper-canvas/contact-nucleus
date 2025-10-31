@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import { lazy, Suspense } from "react";
-import { getRouteConfig } from "./route.utils";
-import Root from "@/layouts/Root";
+import React, { Suspense, lazy } from "react";
+import { getRouteConfig } from "@/router/route.utils";
 import MainLayout from "@/layouts/MainLayout";
+import Root from "@/layouts/Root";
 
 // Lazy load page components
 const Login = lazy(() => import("@/components/pages/Login"));
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
       createRoute({ path: "prompt-password/:appId/:emailAddress/:provider", element: <PromptPassword /> }),
       
       // Main app routes (authenticated)
-      {
+{
         element: <MainLayout />,
         children: [
           createRoute({ index: true, element: <ContactsPage /> }),
@@ -93,11 +93,12 @@ export const router = createBrowserRouter([
           createRoute({ path: "activities", element: <ActivitiesPage /> }),
           createRoute({ path: "quotes", element: <QuotesPage /> }),
           createRoute({ path: "invoices", element: <InvoicesPage /> }),
+          createRoute({
+            path: "*",
+            element: <NotFound />,
+          }),
         ],
       },
-      
-      // 404 catch-all
-      createRoute({ path: "*", element: <NotFound /> }),
     ],
   },
 ]);
